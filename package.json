@@ -9,18 +9,33 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.7",
+    "@mui/lab": "^7.0.1-beta.22",
+    "@mui/material": "^7.3.7",
+    "@mui/material-nextjs": "^7.3.8",
+    "@tabler/icons-react": "^3.36.1",
+    "axios": "^1.13.4",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "mssql": "^12.2.0",
     "next": "16.1.6",
+    "nodemailer": "^8.0.1",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
+    "@types/node": "^20.19.32",
+    "@types/react": "^19.2.13",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5.9.3"
   }
 }

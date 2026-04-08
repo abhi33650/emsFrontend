@@ -135,7 +135,7 @@ const EmailDetail = ({ selectedEmail, getInitials, formatDate }: showEmailDetail
                 <Avatar 
                   sx={{ 
                     bgcolor: "#667eea",
-                    width: 56,
+                    width: 56,  
                     height: 56,
                     fontSize: "1.25rem",
                     fontWeight: "600",

@@ -48,7 +48,6 @@ const getData = async () => {
 const attachmnetData = async (threadid: string) => {
   try {
     const response = await getAttchmentData(threadid);
-
     if (response?.success) {
       setAttachment(response.data);
       return response.data;
@@ -62,12 +61,17 @@ const attachmnetData = async (threadid: string) => {
 };
 
 useEffect(() => {
-  if (selectedEmail?.ThreadId) {
-    attachmnetData(selectedEmail.ThreadId);
-  }
-}, [selectedEmail]);
+  const threadId = selectedEmail?.ThreadId;
+  if (!threadId) return;
 
-console.log(getAttachment , " this is attcahment");
+  attachmnetData(threadId);
+
+  const interval = setInterval(() => {
+    attachmnetData(threadId);
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, [selectedEmail?.ThreadId]);
 
 
 useEffect(() => {
@@ -78,7 +82,6 @@ const moveEmailToTop = (threadId: string) => {
   setgetEmail((prevEmails) => {
     const email = prevEmails.find((e) => e.ThreadId === threadId);
     const updated = prevEmails.filter((e) => e.ThreadId !== threadId);
-
     return email ? [email, ...updated] : prevEmails;
   });
 };
@@ -131,7 +134,7 @@ const unreadCount = getEmail.filter(e => e.isRead === false).length;
       });
     } catch {
       return dateString;
-    }
+    }   
   };
 
   const getInitials = (email: string) => {

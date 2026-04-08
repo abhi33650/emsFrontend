@@ -3,4 +3,5 @@ export interface AttachmentInterface {
   ThreadId:string;
   FileName:string;
   FilePath:string;
+  MessageId:string;
 }

@@ -13,6 +13,8 @@ import {
   ListItemText,
   IconButton,
   Tooltip,
+  Chip,
+  Stack,
 } from "@mui/material";
 import {
   Email as EmailIcon,
@@ -38,6 +40,9 @@ const EmailList = ({
   setSelectedEmail,
   onToggleRead,
 }: showEmailListProps) => {
+
+  console.log(getEmail , ' this is email');
+  
   return (
     <Grid size={{ xs: 12, md: 4 }}>
       <Paper
@@ -62,7 +67,9 @@ const EmailList = ({
                 <ListItem disablePadding>
                   <ListItemButton
                     selected={selectedEmail?.Id === email.Id}
-                    onClick={() => setSelectedEmail(email)}
+                    onClick={(e) => {e.stopPropagation();
+                      setSelectedEmail(email);   
+                      onToggleRead(Number(email.Id),email.isRead ? 1 : 0);}}
                     sx={{
                       py: 2,
 
@@ -102,7 +109,7 @@ const EmailList = ({
                       primary={
                         <Typography
                           variant="subtitle1"
-                          fontWeight={email.isRead ? 400 : 700} // ✅ unread bold
+                          fontWeight={email.isRead ? 400 : 700} 
                           noWrap
                           sx={{ mb: 0.5 }}
                         >
@@ -110,7 +117,7 @@ const EmailList = ({
                         </Typography>
                       }
                       secondary={
-                        <Box component="span">
+                        <Box component="span">  
                           <Typography
                             component="span"
                             variant="body2"
@@ -128,6 +135,31 @@ const EmailList = ({
                           >
                             {formatDate(email.RecivedDate)}
                           </Typography>
+                        <Stack direction="row" alignItems="center" spacing={1}>
+  <Typography variant="body2" color="text.secondary" fontWeight="bold">
+    Reply:
+  </Typography>
+
+  <Chip
+    label={email?.RStatus || "Unknown"}
+    size="small"
+    sx={{
+      fontWeight: "bold",
+      backgroundColor:
+        email?.RStatus?.toLowerCase() === "pending"
+          ? "#ffebee"
+          : "#e8f5e9",
+      color:
+        email?.RStatus?.toLowerCase() === "pending"
+          ? "#d32f2f"
+          : "#2e7d32",
+      border:
+        email?.RStatus?.toLowerCase() === "pending"
+          ? "1px solid #d32f2f"
+          : "1px solid #2e7d32",
+    }}
+  />
+</Stack>
                         </Box>
                       }
                       secondaryTypographyProps={{
@@ -143,7 +175,7 @@ const EmailList = ({
                           : "Mark as Read"
                       }
                     >
-                      <IconButton
+                      <IconButton 
                         onClick={(e) => {
                           e.stopPropagation();
                           onToggleRead(
@@ -152,6 +184,8 @@ const EmailList = ({
                           );
                         }}
                       >
+                      
+                       
                         {email.isRead ? (
                           <MarkEmailUnread />
                         ) : (
@@ -161,7 +195,7 @@ const EmailList = ({
                     </Tooltip>
                   </ListItemButton>
                 </ListItem>
-
+                  
                 <Divider />
               </div>
             ))

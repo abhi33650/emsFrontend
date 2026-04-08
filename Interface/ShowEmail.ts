@@ -12,6 +12,7 @@ export interface ShowEmail {
   remark?: string;
   remarkby?: number;
   Email: string;
+  RStatus:string;
 }
 
 

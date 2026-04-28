@@ -127,65 +127,31 @@ const EmailList = ({
                           >
                             {email.Fromemail}
                           </Typography>
-                          <Typography
-                            component="span"
-                            variant="caption"
-                            color="text.secondary"
-                            sx={{ display: "block" }}
-                          >
-                            {formatDate(email.RecivedDate)}
-                          </Typography>
+                          <Typography component="span" variant="caption" color="text.secondary" sx={{ display: "block" }}>{formatDate(email.RecivedDate)}</Typography>
                         <Stack direction="row" alignItems="center" spacing={1}>
-  <Typography variant="body2" color="text.secondary" fontWeight="bold">
-    Reply:
-  </Typography>
+  <Typography variant="body2" color="text.secondary" fontWeight="bold">Reply:</Typography>
 
-  <Chip
-    label={email?.RStatus || "Unknown"}
+  <Chip label={email?.RStatus || "Unknown"}
     size="small"
-    sx={{
-      fontWeight: "bold",
-      backgroundColor:
-        email?.RStatus?.toLowerCase() === "pending"
-          ? "#ffebee"
-          : "#e8f5e9",
-      color:
-        email?.RStatus?.toLowerCase() === "pending"
-          ? "#d32f2f"
-          : "#2e7d32",
-      border:
-        email?.RStatus?.toLowerCase() === "pending"
-          ? "1px solid #d32f2f"
-          : "1px solid #2e7d32",
-    }}
+    sx={{fontWeight: "bold",
+      backgroundColor:email?.RStatus?.toLowerCase() === "pending"? "#ffebee": "#e8f5e9",
+      color:email?.RStatus?.toLowerCase() === "pending"? "#d32f2f": "#2e7d32",
+      border:email?.RStatus?.toLowerCase() === "pending"? "1px solid #d32f2f": "1px solid #2e7d32"}}
   />
 </Stack>
                         </Box>
-                      }
-                      secondaryTypographyProps={{
-                        component: "div",
-                      }}
+                      }secondaryTypographyProps={{component: "div",}}
                     />
 
                     {/* Toggle Read/Unread */}
                     <Tooltip
-                      title={
-                        email.isRead
-                          ? "Mark as Unread"
-                          : "Mark as Read"
-                      }
+                      title={email.isRead? "Mark as Unread":"Mark as Read"}
                     >
                       <IconButton 
                         onClick={(e) => {
                           e.stopPropagation();
-                          onToggleRead(
-                            Number(email.Id),
-                            email.isRead ? 1 : 0
-                          );
-                        }}
-                      >
-                      
-                       
+                          onToggleRead(Number(email.Id), email.isRead ? 1 : 0);}}>
+                            
                         {email.isRead ? (
                           <MarkEmailUnread />
                         ) : (

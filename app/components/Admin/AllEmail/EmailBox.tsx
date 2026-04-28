@@ -20,39 +20,50 @@ export default function EmailBox() {
   const [mounted, setMounted] = useState(false); 
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    setMounted(true); 
-    let isMounted = true;
+useEffect(() => {
+  setMounted(true);
+  let isMounted = true;
 
-    const getData = async () => {
-      try {
-        setLoading(true);
-        const response = await getEmailData();
-        if (isMounted) {
-          if (response.status === "success") {
-            setgetEmail(response.data);
-            if (response.data.length > 0) {
-              setSelectedEmail(response.data[0]);
-            }
-          }
-        }
-      } catch (err) {
-        if (isMounted) {
-          setError("Failed to fetch emails");
-          console.error(err);
-        }
-      } finally {
-        if (isMounted) {
-          setLoading(false);
+  const getData = async (showLoader = false) => {
+    try {
+      if (showLoader) setLoading(true);
+
+      const response = await getEmailData();
+
+      console.log("Fetching at:", new Date().toLocaleTimeString());
+
+      if (isMounted && response.status === "success") {
+        setgetEmail(response.data);
+
+        if (response.data.length > 0) {
+          setSelectedEmail(response.data[0]);
         }
       }
-    };
-    getData();
+    } catch (err) {
+      if (isMounted) {
+        setError("Failed to fetch emails");
+        console.error(err);
+      }
+    } finally {
+      if (showLoader && isMounted) {
+        setLoading(false);
+      }
+    }
+  };
 
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  getData(true);
+  const interval = setInterval(() => {
+    console.log("Running interval...");
+    getData(false);
+  }, 5000);
+
+  return () => {
+    isMounted = false;
+    clearInterval(interval);
+  };
+}, []);
+
+  
 
   const formatDate = (dateString: string) => {
     try {

@@ -70,12 +70,12 @@ useEffect(() => {
     const response = await getReplyThreads(selectedEmail.ThreadId!);
     if (response.success) {
       setThreads(response.data);
-    }
-  };
+    }               
+  }; 
   getThreadData();
   const interval = setInterval(getThreadData, 5000);
   return () => clearInterval(interval);
-}, [selectedEmail?.ThreadId]); 
+}, [selectedEmail?.ThreadId]);  
 
 
 const handelFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -211,7 +211,7 @@ const handleSendRemark = async () => {
       setRemarkText("");                      
      await fetchRemark();
       if (selectedEmail?.ThreadId) {
-        getData(selectedEmail.ThreadId);
+        getData(selectedEmail.ThreadId); 
       }
      
     } else {

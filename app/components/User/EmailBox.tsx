@@ -14,7 +14,7 @@ import EmailDetail from "./EmailDetail";
 import { User_getAssignedEmails } from "@/Action/UserGetassignEmail";
 import { getReplyThreads } from "@/Action/ShowThreads";
 import { UpdateReadStatus } from "@/Action/UpdateStatus";
-import type { AttachmentInterface } from "@/Interface/Attachment";
+import type { AttachmentInterface } from "@/Interface/Attachment";  
 import { getAttchmentData } from "@/Action/GetAttachment";
 
 export default function EmailBox() {
@@ -63,21 +63,19 @@ const attachmnetData = async (threadid: string) => {
 useEffect(() => {
   const threadId = selectedEmail?.ThreadId;
   if (!threadId) return;
-
   attachmnetData(threadId);
-
   const interval = setInterval(() => {
     attachmnetData(threadId);
   }, 5000);
-
   return () => clearInterval(interval);
 }, [selectedEmail?.ThreadId]);
 
 
 useEffect(() => {
   setMounted(true);
-  getData();
+  getData();      
 }, []);
+
 const moveEmailToTop = (threadId: string) => {
   setgetEmail((prevEmails) => {
     const email = prevEmails.find((e) => e.ThreadId === threadId);
@@ -88,19 +86,15 @@ const moveEmailToTop = (threadId: string) => {
 useEffect(() => {
   const getThreadData = async () => {
     if (!selectedEmail?.ThreadId) return;
-
     try {
       const response = await getReplyThreads(selectedEmail.ThreadId);
-
       if (response.success) {
         setThreads(response.data);
-      }
-
+      }    
     } catch (error) {
       console.error(error);
     }
   };
-
   getThreadData();
 }, [selectedEmail]);
 
@@ -156,7 +150,8 @@ const unreadCount = getEmail.filter(e => e.isRead === false).length;
         <CircularProgress size={60} />
       </Box>
     );
-  }              
+  }    
+
   if (error) {
     return (
       <Container maxWidth="md" sx={{ mt: 4 }}>
@@ -179,17 +174,15 @@ const unreadCount = getEmail.filter(e => e.isRead === false).length;
             <Box>
               <Typography variant="h4" fontWeight="bold">Email Inbox</Typography>
               <Typography variant="body2" sx={{ opacity: 0.9 }}>
-  Total: {getEmail.length} | 
-  Read: {readCount} | 
-  Pending: {unreadCount}
-</Typography>
+                 Total: {getEmail.length} | Read: {readCount} |  Pending: {unreadCount}
+              </Typography>
             </Box>
           </Stack>
         </Paper>
-
+     
         <Grid container spacing={3}>
           {/* Email List */}
-            <EmailList selectedEmail={selectedEmail} getInitials={getInitials} formatDate={formatDate} getEmail={getEmail}   setSelectedEmail={setSelectedEmail} onToggleRead={handleToggleRead }/>
+          <EmailList selectedEmail={selectedEmail} getInitials={getInitials} formatDate={formatDate} getEmail={getEmail}   setSelectedEmail={setSelectedEmail} onToggleRead={handleToggleRead }/>
 
           {/* Email Detail View */}
           <EmailDetail selectedEmail={selectedEmail} getInitials={getInitials} formatDate={formatDate}   getData={moveEmailToTop}  attachments={getAttachment}/>
